@@ -1,4 +1,4 @@
-    
+     
 import numpy as np
 
 def beamDeflection(positions, beamLength, loadPosition, loadForce, beamSupport):
@@ -25,4 +25,5 @@ def beamDeflection(positions, beamLength, loadPosition, loadForce, beamSupport):
         raise ValueError("Invalid beam support. Must be 'both' or 'cantilever'.")
 
     return deflection
-print()
+    print(deflection)
+print(beamDeflection(np.array([5,0]), 10, 4, 503234, "both"))
