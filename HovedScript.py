@@ -5,6 +5,8 @@ import os.path
 from colorama import init as colorama_init
 from colorama import Fore
 from colorama import Style
+from EndeligKarakterFunktion import computeFinalGrades
+
 colorama_init()
 
 # Denne kode er skrevet af Kasper Mejer Lærche Laursen, s224196
@@ -32,21 +34,13 @@ while True:
     if choice == 1:
 # Beder bruger om at skrive filnavn
         filNavn = input("Indsæt filnavn: ")
-        
+        data = computeFinalGrades(filNavn)
 # Checker om filen findes        
         check_file = os.path.isfile(filNavn)
         
         if check_file == True:
             print('\x1b[6;30;42m' + f'{filNavn} er indlæst korrekt.' + '\x1b[0m')
-            
-# Køre funktionen dataLoad og giver fejlbeskeder på fejlagtigt data            
-            data = dataLoad(filNavn)
-            
-            pass
-
-# Hvis filen ikke eksistere giver den fejlbesked og sender retur til hoved menu.        
-        elif check_file == False:
-            print('\x1b[0;30;41m' + f"{filNavn} eksistere ikke i mappen, eller er der tastefejl, prøv igen." + '\x1b[0m')
+           
             while True:
 # ------------------------------------------------------------------
 
@@ -63,20 +57,11 @@ while True:
                  elif choice2 == 2:
                      
                      break
+            
 
-# ------------------------------------------------------------------
-
-# Denne kode er skrevet af Anders Enrico Krog Petersen, s224076
-
-# 3. Vis statistik
-                 elif choice == 3:
-
-
-                    break
-# ------------------------------------------------------------------
-
-# Denne kode er skrevet af Kasper Mejer Lærche Laursen, s224196
-
-# 4. Generer diagrammer
-                 elif choice == 4:
-                     break
+# Hvis filen ikke eksistere giver den fejlbesked og sender retur til hoved menu.        
+        elif check_file == False:
+            print('\x1b[0;30;41m' + f"{filNavn} eksistere ikke i mappen, eller er der tastefejl, prøv igen." + '\x1b[0m')
+            pass
+            
+            
