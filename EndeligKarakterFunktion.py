@@ -1,34 +1,34 @@
-import numpy as np
-from Karakterafrundingsfunktion import roundGrade
+"""Denne kode er skrevet af Anders Enrico Krog Petersen, S224076."""
 
-matrix = np.random.randint(-4, 15, size=(25, 10))
+from Karakterafrundningsfunktion import roundGrade
 
+"""
+funktion tages en NxM matrice, hvor N er antal studerende og M er antal opgever. Den regner derefter gennemsnittet,
+og laver det om til 7-trins skala. Hvis eleven har fået -3 i én opgave bliver dette den endelige karakter. Hvis der kun
+er en opgave er dette den endelige karakter.
+"""
 def computeFinalGrades(grades):
-    grades = np.array(grades)
-    gradesFinal = np.empty(0)
     
-    for i in range(len(grades[0,:])):
+# Laver en tom liste som vi sætter den endelige karakter ind ind
+    gradesFinal = []
+    
+# Itterere gennem alle elever
+    for student in grades:
         
+# Hvis en elev har fået -3 i en eller flere opgaver er deres endelige karakter -3
+        if -3 in student:
+            gradesFinal.append(-3)
         
-        if np.where(grades[i,:] <= -3):
-            gradesFinal =np.append(gradesFinal, -3)
-        
-        
-        #if grades[i,:].index(-3):
-            #gradesFinal = np.append(gradesFinal, grades[i,:])
-        
-        elif len(grades[i,:]) == 1:
-            gradesFinal = np.append(gradesFinal, grades[i,:])
-        
-        elif len(grades[i,:]) > 1:
-            grades = np.delete(grades[i,:], min(grades[i,:]))
+        else:
             
-            gradesRound = np.mean(grades[i,:])
-            
-            gradesFinal = np.append(gradesFinal, gradesRound)
+# Hvis M>1 fjerner den, den dårligste karakter og regner gennemsnittet
+            if len(student) > 1:
+                avgGrade = (sum(student) - min(student))/(len(student)-1)
+                gradesFinal.append(avgGrade)
+                
+# Hvis eleven kun har 1 opgave, er dette den endelige karakter.
+            else:
+                gradesFinal.append(student[0])
     
-    gradesFinal = roundGrade(gradesFinal)
-    
-    return gradesFinal
-
-print(computeFinalGrades(matrix))
+# Laver karakteren om til 7-trins skalaen og returnerer dette.
+    return roundGrade(gradesFinal)
