@@ -14,7 +14,7 @@ colorama_init()
 
 # Definere menu muligheder
 menuItems0 =np.array(['\x1b[;30;47m' + "Indlæs data" + '\x1b[0m'])
-menuItems = np.array([ '\x1b[0;30;47m' + "Indlæs ny data" + '\x1b[0m', '\x1b[0;30;47m' + "Check for datafejl" + '\x1b[0m', '\x1b[0;30;47m' + "Generer diagrammer" + '\x1b[0m', '\x1b[0;30;47m' + "Vis karaterliste" + '\x1b[0m', '\x1b[0;30;47m' + "Afslut" + '\x1b[0m'])
+menuItems = np.array([ '\x1b[0;30;47m' + "Indlæs ny data" + '\x1b[0m', '\x1b[0;30;47m' + "Check for datafejl" + '\x1b[0m', '\x1b[0;30;47m' + "Generer diagrammer" + '\x1b[0m', '\x1b[0;30;47m' + "Vis karakterliste" + '\x1b[0m', '\x1b[0;30;47m' + "Afslut" + '\x1b[0m'])
 
 # Under menu til 'Filtrer data'.
 menuItems2 = np.array(['\x1b[;37;44m' + "Type af bakterie" + '\x1b[0m', 
@@ -52,10 +52,10 @@ while True:
 # Antal elever og opgaver
                 studentCount = len(gradesMatrix[:,0])
                 assignCount = len(gradesMatrix[0,:])
-                print('\x1b[6;30;42m' + f'Der er indlæst {studentCount} elever og {assignCount} opgaver' + '\x1b[0m')
+                print('\x1b[6;30;46m' + f'Der er indlæst {studentCount} elever og {assignCount} opgaver' + '\x1b[0m')
 # ------------------------------------------------------------------
 
-# Denne kode er skrevet af Kasper Mejer Lærche Laursen, s224196
+# Denne kode er skrevet af Kasper Mejer Lærche Laursen, s214496
                 choice = displayMenu(menuItems)
 # 2. Filtrer data
                 if choice == 1:
@@ -87,14 +87,28 @@ while True:
                                
                     
                 elif choice == 2:
-                     while True:
-                         for row in range(dataMatrix.shape[0]):
-                             for student in dataMatrix[row]:
-                                 if student not in -3:
-                                    raise ValueError (f"Karakter ikke på skalaen {gradesMatrix}")
-                          
-                         break
+                    try:
+                        for students1 in range(dataMatrix.shape[0]):
+                            for students2 in range(students1 + 1, dataMatrix.shape[0]):
+                                if dataMatrix[students1][0] == dataMatrix[students2][0]:
+                                    raise ValueError(f"Identiske id'er fundet i linje {students1+1} og {students2+1}")
+                    except ValueError as error:
+                                        print(f"{error}")
+                    
+                    for row in range(gradesMatrix.shape[0]):
+                        try:
+                            if ((gradesMatrix[row] >= -3).all() and (gradesMatrix[row] <= 12).all()):
+                                pass
+                            else:
+                                    outOfRange = ~((gradesMatrix[row] >= -3) & (gradesMatrix[row] <= 12))
+                                    outOfRangeGrades = gradesMatrix[row, outOfRange]
+                                    raise ValueError(f"Karakter ikke på skalaen i række {row+1}: {outOfRangeGrades}")
             
+                             
+                        except ValueError as error:
+                                        print(f"{error}")
+
+
 
 # Hvis filen ikke eksistere giver den fejlbesked og sender retur til hoved menu.        
         elif check_file == False:
