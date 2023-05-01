@@ -6,9 +6,9 @@ from Karakterafrundningsfunktion import roundGrade
 
 matrix = np.random.randint(-3,13, size=(20,4))
 
-"""Denne funktion plotter alle de karaktere som er givet for hver opgave.
+""" Denne funktion plotter alle de karaktere som er givet for hver opgave.
 Der tilføjes tilfældig +/- 0.1 i støj til hvert data punkt i x og y, så der
-kan ses forskel på nærtliggende data punkter."""
+kan ses forskel på nærtliggende data punkter. """
 def gradesPlot(grades):
     
 # Laver en variabel for antalet af elever og antal opgaver.
@@ -27,11 +27,23 @@ def gradesPlot(grades):
         plt.plot(xValues, yValues, '.', color='blue')
     
     
-    
 # Laver plot for gennemsnits karakteren.
     avgGrade = np.mean(grades, axis=0)
     avgGrade = roundGrade(avgGrade)
-    plt.plot(np.arange(1, assignments+1), avgGrade, color='red')
+    plt.plot(np.arange(1, assignments+1), avgGrade, color='red', label='Average Grade')
+    
+ #----------------------Layout & instillinger af plot--------------------------
+    
+# Sætter placeringen af signaturforklaringen.
+    ax = plt.subplot(111)
+    
+# Skrumper den nuværende axes højde med 10% i bunden
+    box = ax.get_position()
+    ax.set_position([box.x0, box.y0 + box.height * 0.1,
+                 box.width, box.height * 0.9])
+    # Put a legend below current axis
+    ax.legend(loc='upper right', bbox_to_anchor=(1, -0.07),
+          fancybox=True, shadow=True, ncol=5, fontsize='8')
     
 # Laver y-aksens værdier og spreder dem jævnt ud
     yTickValues = [-3, 0, 2, 4, 7, 10, 12]
@@ -50,6 +62,8 @@ def gradesPlot(grades):
     plt.title("Grades per assignment", fontdict = font1)
     plt.xlabel("Assignment", fontdict = font2)
     plt.ylabel("Grades", fontdict = font2)
+
+# Vis plottet
     plt.show()
     
 print(gradesPlot(matrix))
