@@ -6,6 +6,7 @@ from colorama import init as colorama_init
 from colorama import Fore
 from colorama import Style
 from EndeligKarakterFunktion import computeFinalGrades
+import pandas as pd
 
 colorama_init()
 
@@ -34,12 +35,22 @@ while True:
     if choice == 1:
 # Beder bruger om at skrive filnavn
         filNavn = input("Indsæt filnavn: ")
-        data = computeFinalGrades(filNavn)
 # Checker om filen findes        
         check_file = os.path.isfile(filNavn)
         
+# Laver csv filen om til en NxM matrice, hvor N er antale elever og M er antal opgaver,
+# Og indeholder kun karakterer
+        dataFile = pd.read_csv(filNavn)
+        gradesMatrix = np.array(dataFile)
+        gradesMatrix = np.delete(gradesMatrix,slice(0,2),1)
+        
+# Antal elever og opgaver.
+        studentCount = len(gradesMatrix[:,0])
+        assignCount = len(gradesMatrix[0,:])
+        
         if check_file == True:
             print('\x1b[6;30;42m' + f'{filNavn} er indlæst korrekt.' + '\x1b[0m')
+            print('\x1b[6;30;42m' + f'Der er indlæst {studentCount} elever og {assignCount} opgaver' + '\x1b[0m')
            
             while True:
 # ------------------------------------------------------------------
