@@ -1,10 +1,9 @@
-"""Denne kode er skrevet af Anders Enrico Krog Petersen, S224076."""
+#Denne kode er skrevet af Anders Enrico Krog Petersen, S224076.
 
 import matplotlib.pyplot as plt
 import numpy as np
 from Karakterafrundningsfunktion import roundGrade
-
-matrix = np.random.randint(-3,13, size=(20,4))
+from EndeligKarakterFunktion import computeFinalGrades
 
 """ Denne funktion plotter alle de karaktere som er givet for hver opgave.
 Der tilføjes tilfældig +/- 0.1 i støj til hvert data punkt i x og y, så der
@@ -66,4 +65,29 @@ def gradesPlot(grades):
 # Vis plottet
     plt.show()
     
-print(gradesPlot(matrix))
+#Denne kode er skrevet af Kasper Mejer Lærche Laursen, s214496.
+
+    grades = computeFinalGrades(grades)
+    plt.figure(figsize=(8, 5))
+    font1 = {'family': 'serif', 'color': 'blue', 'size': 15}
+    font2 = {'family': 'serif', 'color': 'darkred', 'size': 10}
+
+    # Opret søjle-diagram
+    antal_karakter = [np.count_nonzero(np.array(grades) == -3), 
+         np.count_nonzero(np.array(grades) == 0), 
+         np.count_nonzero(np.array(grades) == 2),
+         np.count_nonzero(np.array(grades) == 4),
+         np.count_nonzero(np.array(grades) == 7),
+         np.count_nonzero(np.array(grades) == 10),
+         np.count_nonzero(np.array(grades) == 12)]
+    plt.bar([-3, 0, 2, 4, 7, 10, 12], antal_karakter)
+
+    # Tilføj labels til søjler
+    plt.xticks([-3, 0, 2, 4, 7, 10, 12], ["-3", '0', '2', '4', '7', '10', '12'], fontdict=font2)
+    plt.ylabel("Antal af Karakter", fontdict=font2)
+    plt.title("Karakter", fontdict=font1)
+
+    # Vis søjle-diagrammer
+    plt.show()
+    
+    
