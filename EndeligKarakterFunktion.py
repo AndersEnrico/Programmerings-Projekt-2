@@ -1,4 +1,4 @@
-"""Denne kode er skrevet af Anders Enrico Krog Petersen, S224076."""
+#Denne kode er skrevet af Anders Enrico Krog Petersen, s224076.
 
 from Karakterafrundningsfunktion import roundGrade
 
