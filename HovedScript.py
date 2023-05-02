@@ -6,11 +6,13 @@ from colorama import init as colorama_init
 from colorama import Fore
 from colorama import Style
 from EndeligKarakterFunktion import computeFinalGrades
+from plotfunktion import gradesPlot
+from Karakterafrundningsfunktion import roundGrade
 import pandas as pd
 
 colorama_init()
 
-# Denne kode er skrevet af Kasper Mejer Lærche Laursen, s224196
+# Denne kode er skrevet af Kasper Mejer Lærche Laursen, s214496
 
 # Definere menu muligheder
 menuItems0 =np.array(['\x1b[;30;47m' + "Indlæs data" + '\x1b[0m'])
@@ -57,7 +59,7 @@ while True:
 
 # Denne kode er skrevet af Kasper Mejer Lærche Laursen, s214496
                 choice = displayMenu(menuItems)
-# 2. Filtrer data
+# Der kan indsættes et nyt filnavn ved at genbruge koden ovenfor
                 if choice == 1:
                     # Beder bruger om at skrive filnavn
                             filNavn = input("Indsæt filnavn: ")
@@ -83,23 +85,30 @@ while True:
                                     break
                             elif check_file == False:
                                         print('\x1b[0;30;41m' + f"{filNavn} eksistere ikke i mappen, eller er der tastefejl, prøv igen." + '\x1b[0m')
-                                        pass
-                               
+                                        break
+                           
                     
                 elif choice == 2:
+                    # giver hver studienummer en værdi
                     try:
                         for students1 in range(dataMatrix.shape[0]):
+                        # giver nu hver studie nummer endnu en værdi men plus  1
                             for students2 in range(students1 + 1, dataMatrix.shape[0]):
+                                # der tjekkes om der på noget tidpunkt er et sted i matrixen hvor disse 2 værdier er ens
                                 if dataMatrix[students1][0] == dataMatrix[students2][0]:
+                                    # hvis der er 2 med samme studienummer kommer der en ValueError
                                     raise ValueError(f"Identiske id'er fundet i linje {students1+1} og {students2+1}")
                     except ValueError as error:
                                         print(f"{error}")
-                    
+                    # row bliver defineret for at give error besked i hvilken række
                     for row in range(gradesMatrix.shape[0]):
                         try:
+                            # der tjekkes om alle værdier er inden for intervallet på 7trins skalen
                             if ((gradesMatrix[row] >= -3).all() and (gradesMatrix[row] <= 12).all()):
                                 pass
                             else:
+                                # Der defineres en matrix med de værdier der er uden for intervallet
+                                # Og der bliver raise en ValueError hvis karakteren ikke eksistere
                                     outOfRange = ~((gradesMatrix[row] >= -3) & (gradesMatrix[row] <= 12))
                                     outOfRangeGrades = gradesMatrix[row, outOfRange]
                                     raise ValueError(f"Karakter ikke på skalaen i række {row+1}: {outOfRangeGrades}")
