@@ -1,5 +1,9 @@
+#Denne kode er skrevet af Kasper Mejer Lærche Laursen s214496.
 def roundGrade(grades):
+    # laves in liste som de nye karaktere bliver sat ind i
     gradesRounded = []
+    # afrunder hver karakter til den nærmste karakter på 7 trins skalaen 
+    # og appender denne nye karakter i gradesRounded
     for en_grade in grades:
         if en_grade < -1.5:   
             gradesRounded.append(-3)
