@@ -66,13 +66,14 @@ def gradesPlot(grades):
     plt.show()
     
 #Denne kode er skrevet af Kasper Mejer Lærche Laursen, s214496.
-
+# første bliver karakteren afrundet
     grades = computeFinalGrades(grades)
+    # størrelse of font på plottet
     plt.figure(figsize=(8, 5))
     font1 = {'family': 'serif', 'color': 'blue', 'size': 15}
     font2 = {'family': 'serif', 'color': 'darkred', 'size': 10}
 
-    # Opret søjle-diagram
+    # tæller antallet af tilfælde hvor eleverne har fået en bestem karakter
     antal_karakter = [np.count_nonzero(np.array(grades) == -3), 
          np.count_nonzero(np.array(grades) == 0), 
          np.count_nonzero(np.array(grades) == 2),
@@ -80,6 +81,7 @@ def gradesPlot(grades):
          np.count_nonzero(np.array(grades) == 7),
          np.count_nonzero(np.array(grades) == 10),
          np.count_nonzero(np.array(grades) == 12)]
+    # Opretter søjle diagram
     plt.bar([-3, 0, 2, 4, 7, 10, 12], antal_karakter)
 
     # Tilføj labels til søjler
